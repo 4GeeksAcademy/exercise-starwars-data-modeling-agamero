@@ -35,7 +35,7 @@ class Starships(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     model = Column(String(250), nullable=False)
-    MGLT = Column(String(250))
+    MGLT = Column(String(250), nullable=False)
     cargo_capacity = Column(String(250))
     consumables = Column(String(250), nullable=False)
     cost_in_credits = Column(String(250), nullable=False)
@@ -57,8 +57,8 @@ class Homeworld(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     climate = Column(String(250), nullable=False)
-    diameter = Column(String(250))
-    films = Column(String(250))
+    diameter = Column(String(250), nullable=False)
+    films = Column(String(250), nullable=False)
     gravity = Column(String(250), nullable=False)
     orbital_period = Column(String(250), nullable=False)
     population = Column(String(250), nullable=False)
@@ -68,20 +68,26 @@ class Homeworld(Base):
     terrain = Column(String(250), nullable=False)
     url = Column(String(250), nullable=False)
     
-class Favs(Base):
-    __tablename__ = 'favs'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+class FavsCharacter(Base):
+    __tablename__ = 'CharactersFavs'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     character_id = Column(Integer, ForeignKey('character.id'))
+
+class FavsStarships(Base):
+    __tablename__ = 'StarshipsFavs'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     starships_id = Column(Integer, ForeignKey('starships.id'))
+
+class FavsHomeworld(Base):
+    __tablename__ = 'Homeworldsfavs'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     homeworld_id = Column(Integer, ForeignKey('homeworld.id'))
 
 class User(Base):
     __tablename__ = 'user'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
     password = Column(String(250), nullable=False)
